@@ -24,7 +24,7 @@ st.set_page_config(
 # Create header image function
 @st.cache_data
 def create_header_image():
-    width, height = 1400, 420
+    width, height = 1200, 360
     background_color = (15, 32, 71)
     image = Image.new('RGB', (width, height), background_color)
     draw = ImageDraw.Draw(image)
@@ -59,8 +59,8 @@ def create_header_image():
         except Exception:
             return ImageFont.load_default()
 
-    title_font = get_font(110, "bold")
-    subtitle_font = get_font(58, "regular")
+    title_font = get_font(90, "bold")
+    subtitle_font = get_font(50, "regular")
     
     # Title
     title_text = " Fake News Detection System"
@@ -77,8 +77,8 @@ def create_header_image():
     subtitle_x = (width - subtitle_width) // 2
     
     # Draw texts
-    draw.text((title_x, 60), title_text, fill=(255, 215, 0), font=title_font)
-    draw.text((subtitle_x, 220), subtitle_text, fill=(255, 255, 255), font=subtitle_font)
+    draw.text((title_x, 50), title_text, fill=(255, 215, 0), font=title_font)
+    draw.text((subtitle_x, 190), subtitle_text, fill=(255, 255, 255), font=subtitle_font)
     
     return image
 
@@ -153,7 +153,7 @@ st.sidebar.info("**Fake News Detection System**\n\nUsing NLP & Machine Learning"
 if page == "🏠 Home":
     # Display Header Image
     header_image = create_header_image()
-    st.image(header_image, width='stretch')
+    st.image(header_image, width='content')
     st.markdown("---")
     
     # Project Overview
