@@ -22,23 +22,20 @@ st.set_page_config(
 # Create header image function
 @st.cache_data
 def create_header_image():
-    """Create a professional header image with text"""
     width, height = 1200, 300
     background_color = (15, 32, 71)  # Dark blue
     image = Image.new('RGB', (width, height), background_color)
     draw = ImageDraw.Draw(image)
     
     try:
-        # Try to use a larger font
         title_font = ImageFont.truetype("arial.ttf", 70)
         subtitle_font = ImageFont.truetype("arial.ttf", 40)
     except:
-        # Fallback to default font
         title_font = ImageFont.load_default()
         subtitle_font = ImageFont.load_default()
     
     # Title
-    title_text = "📰 Fake News Detection System"
+    title_text = " Fake News Detection System"
     # Subtitle
     subtitle_text = "Using Natural Language Processing & Machine Learning"
     
