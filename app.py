@@ -24,7 +24,7 @@ st.set_page_config(
 # Create header image function
 @st.cache_data
 def create_header_image():
-    width, height = 1200, 360
+    width, height = 1500, 360
     background_color = (15, 32, 71)
     image = Image.new('RGB', (width, height), background_color)
     draw = ImageDraw.Draw(image)
