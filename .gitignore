@@ -1,0 +1,35 @@
+# Large datasets
+Dataset/
+*.csv
+*.xlsx
+*.xls
+
+# Virtual environment
+myenv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large binary files
+*.jb
