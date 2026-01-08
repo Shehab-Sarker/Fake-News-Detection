@@ -36,6 +36,18 @@ model = joblib.load("lr_model.jb")
 streamlit run app.py
 ```
 
+## Fonts (offline-safe)
+
+The header image uses a TrueType font. To avoid any internet dependency, the app now looks for fonts in the repository first:
+
+- Preferred (bundled):
+   - assets/fonts/DejaVuSans.ttf
+   - assets/fonts/DejaVuSans-Bold.ttf
+
+If these files are not present, the app will try common system locations (e.g., Arial on Windows, DejaVu on Linux). As a last resort, it falls back to the default PIL font, so the app still runs.
+
+You can place DejaVu fonts in the paths above (they are freely available) or rely on your system fonts.
+
 The app will open at `http://localhost:8501` in your browser.
 
 ## 📁 File Structure
