@@ -22,14 +22,14 @@ st.set_page_config(
 # Create header image function
 @st.cache_data
 def create_header_image():
-    width, height = 1200, 300
+    width, height = 1400, 400
     background_color = (15, 32, 71)  # Dark blue
     image = Image.new('RGB', (width, height), background_color)
     draw = ImageDraw.Draw(image)
     
     try:
-        title_font = ImageFont.truetype("arial.ttf", 70)
-        subtitle_font = ImageFont.truetype("arial.ttf", 40)
+        title_font = ImageFont.truetype("arial.ttf", 100)
+        subtitle_font = ImageFont.truetype("arial.ttf", 55)
     except:
         title_font = ImageFont.load_default()
         subtitle_font = ImageFont.load_default()
@@ -49,8 +49,8 @@ def create_header_image():
     subtitle_x = (width - subtitle_width) // 2
     
     # Draw texts
-    draw.text((title_x, 50), title_text, fill=(255, 215, 0), font=title_font)  # Gold color
-    draw.text((subtitle_x, 150), subtitle_text, fill=(255, 255, 255), font=subtitle_font)  # White
+    draw.text((title_x, 60), title_text, fill=(255, 215, 0), font=title_font)  # Gold color
+    draw.text((subtitle_x, 200), subtitle_text, fill=(255, 255, 255), font=subtitle_font)  # White
     
     return image
 
@@ -125,7 +125,7 @@ st.sidebar.info("**Fake News Detection System**\n\nUsing NLP & Machine Learning"
 if page == "🏠 Home":
     # Display Header Image
     header_image = create_header_image()
-    st.image(header_image, use_container_width=True)
+    st.image(header_image, width='stretch')
     st.markdown("---")
     
     # Project Overview
@@ -233,7 +233,7 @@ if page == "🏠 Home":
                      color='Score',
                      color_continuous_scale='Viridis')
         fig.update_layout(height=300, showlegend=False)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
     
     st.markdown("---")
     
@@ -242,17 +242,17 @@ if page == "🏠 Home":
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        if st.button("🔍 Check News Now", use_container_width=True):
+        if st.button("🔍 Check News Now", width='stretch'):
             st.session_state["page"] = "🔍 Check News"
             st.rerun()
     
     with col2:
-        if st.button("📊 View Model Analysis", use_container_width=True):
+        if st.button("📊 View Model Analysis", width='stretch'):
             st.session_state["page"] = "📊 Model Analysis"
             st.rerun()
     
     with col3:
-        if st.button("📖 Learn More", use_container_width=True):
+        if st.button("📖 Learn More", width='stretch'):
             st.info("Scroll down for more information!")
     
     st.markdown("---")
@@ -317,10 +317,10 @@ elif page == "🔍 Check News":
     col1, col2 = st.columns([1, 5])
     
     with col1:
-        analyze_button = st.button("🔎 Analyze News", type="primary", use_container_width=True)
+        analyze_button = st.button("🔎 Analyze News", type="primary", width='stretch')
     
     with col2:
-        clear_button = st.button("🗑️ Clear", use_container_width=True)
+        clear_button = st.button("🗑️ Clear", width='stretch')
     
     if clear_button:
         st.rerun()
@@ -403,7 +403,7 @@ elif page == "🔍 Check News":
                         title='Prediction Probabilities'
                     )
                     fig.update_layout(showlegend=False, height=350)
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, width='stretch')
                 
                 with col2:
                     st.write("**Detailed Probabilities:**")
@@ -522,7 +522,7 @@ elif page == "📊 Model Analysis":
             hole=0.4
         )
         fig.update_layout(height=400)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
     
     with col2:
         st.subheader("Data Split")
@@ -541,7 +541,7 @@ elif page == "📊 Model Analysis":
             color_discrete_sequence=['#4CAF50', '#2196F3']
         )
         fig.update_layout(height=350, showlegend=False)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
         
         st.info("""
         **Training Set:** 31,500 articles (70%)
@@ -590,7 +590,7 @@ elif page == "📊 Model Analysis":
         )
         fig.update_layout(height=350, showlegend=False)
         fig.update_yaxes(range=[90, 100])
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
     
     with col2:
         # Confusion Matrix Visualization
@@ -615,7 +615,7 @@ elif page == "📊 Model Analysis":
             xaxis_title='Predicted Label',
             yaxis_title='True Label'
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
     
     st.markdown("---")
     
@@ -672,7 +672,7 @@ elif page == "📊 Model Analysis":
         'Training Time (s)': [12.5, 8.3, 7.1]
     })
     
-    st.dataframe(comparison_data, use_container_width=True, hide_index=True)
+    st.dataframe(comparison_data, width='stretch', hide_index=True)
     
     st.success("✅ **Selected Model:** Logistic Regression (Best overall performance)")
     
@@ -686,7 +686,7 @@ elif page == "📊 Model Analysis":
         color_discrete_sequence=['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4']
     )
     fig.update_layout(height=400)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
     
     st.markdown("---")
     
@@ -787,9 +787,10 @@ elif page == "📊 Model Analysis":
 st.markdown("---")
 st.markdown("""
 <div style='text-align: center; padding: 20px;'>
-    <h4>🎓 Fake News Detection System</h4>
+    <h4>📰 Fake News Detection System</h4>
     <p>Built with ❤️ using Streamlit, Scikit-learn & NLTK</p>
     <p><strong>Dataset:</strong> <a href='https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset' target='_blank'>Kaggle Fake & Real News Dataset</a></p>
     <p><em>© 2026 - Natural Language Processing & Machine Learning Project</em></p>
 </div>
 """, unsafe_allow_html=True)
+
