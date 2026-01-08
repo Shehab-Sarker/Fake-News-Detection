@@ -10,6 +10,8 @@ import plotly.graph_objects as go
 from PIL import Image, ImageDraw, ImageFont
 import io
 import base64
+import os
+import urllib.request
 
 # Page Configuration
 st.set_page_config(
@@ -22,17 +24,43 @@ st.set_page_config(
 # Create header image function
 @st.cache_data
 def create_header_image():
-    width, height = 1400, 400
-    background_color = (15, 32, 71)  # Dark blue
+    width, height = 1400, 420
+    background_color = (15, 32, 71)
     image = Image.new('RGB', (width, height), background_color)
     draw = ImageDraw.Draw(image)
-    
-    try:
-        title_font = ImageFont.truetype("arial.ttf", 100)
-        subtitle_font = ImageFont.truetype("arial.ttf", 55)
-    except:
-        title_font = ImageFont.load_default()
-        subtitle_font = ImageFont.load_default()
+
+    def get_font(size, weight="bold"):
+        if weight == "bold":
+            candidates = [
+                "arialbd.ttf",
+                os.path.join(os.environ.get("WINDIR", "C:/Windows"), "Fonts", "arialbd.ttf"),
+                "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+            ]
+            remote = "https://github.com/dejavu-fonts/dejavu-fonts/raw/version_2_37/ttf/DejaVuSans-Bold.ttf"
+        else:
+            candidates = [
+                "arial.ttf",
+                os.path.join(os.environ.get("WINDIR", "C:/Windows"), "Fonts", "arial.ttf"),
+                "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            ]
+            remote = "https://github.com/dejavu-fonts/dejavu-fonts/raw/version_2_37/ttf/DejaVuSans.ttf"
+
+        for path in candidates:
+            try:
+                if path and os.path.exists(path):
+                    return ImageFont.truetype(path, size)
+            except Exception:
+                pass
+
+        try:
+            with urllib.request.urlopen(remote, timeout=5) as resp:
+                data = resp.read()
+            return ImageFont.truetype(io.BytesIO(data), size)
+        except Exception:
+            return ImageFont.load_default()
+
+    title_font = get_font(110, "bold")
+    subtitle_font = get_font(58, "regular")
     
     # Title
     title_text = " Fake News Detection System"
@@ -49,8 +77,8 @@ def create_header_image():
     subtitle_x = (width - subtitle_width) // 2
     
     # Draw texts
-    draw.text((title_x, 60), title_text, fill=(255, 215, 0), font=title_font)  # Gold color
-    draw.text((subtitle_x, 200), subtitle_text, fill=(255, 255, 255), font=subtitle_font)  # White
+    draw.text((title_x, 60), title_text, fill=(255, 215, 0), font=title_font)
+    draw.text((subtitle_x, 220), subtitle_text, fill=(255, 255, 255), font=subtitle_font)
     
     return image
 
