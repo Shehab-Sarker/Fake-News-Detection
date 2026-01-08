@@ -11,7 +11,6 @@ from PIL import Image, ImageDraw, ImageFont
 import io
 import base64
 import os
-import urllib.request
 
 # Page Configuration
 st.set_page_config(
@@ -30,20 +29,21 @@ def create_header_image():
     draw = ImageDraw.Draw(image)
 
     def get_font(size, weight="bold"):
+        base_dir = os.path.dirname(__file__)
         if weight == "bold":
             candidates = [
+                os.path.join(base_dir, "assets", "fonts", "DejaVuSans-Bold.ttf"),
                 "arialbd.ttf",
                 os.path.join(os.environ.get("WINDIR", "C:/Windows"), "Fonts", "arialbd.ttf"),
                 "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
             ]
-            remote = "https://github.com/dejavu-fonts/dejavu-fonts/raw/version_2_37/ttf/DejaVuSans-Bold.ttf"
         else:
             candidates = [
+                os.path.join(base_dir, "assets", "fonts", "DejaVuSans.ttf"),
                 "arial.ttf",
                 os.path.join(os.environ.get("WINDIR", "C:/Windows"), "Fonts", "arial.ttf"),
                 "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
             ]
-            remote = "https://github.com/dejavu-fonts/dejavu-fonts/raw/version_2_37/ttf/DejaVuSans.ttf"
 
         for path in candidates:
             try:
@@ -52,12 +52,7 @@ def create_header_image():
             except Exception:
                 pass
 
-        try:
-            with urllib.request.urlopen(remote, timeout=5) as resp:
-                data = resp.read()
-            return ImageFont.truetype(io.BytesIO(data), size)
-        except Exception:
-            return ImageFont.load_default()
+        return ImageFont.load_default()
 
     title_font = get_font(90, "bold")
     subtitle_font = get_font(50, "regular")
